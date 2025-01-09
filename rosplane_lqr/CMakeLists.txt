@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(rosplane)
+project(rosplane_lqr) # NOTE: Renamed the project.
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -18,7 +18,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# NOTE: find dependencies, these lines don't require modification
+# unless these packages were also modified. As a consequence,
+# these packages must be sourced when building this repo.
+
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -47,6 +50,9 @@ install(DIRECTORY launch params DESTINATION share/${PROJECT_NAME}/)
 
 ### LIBRARIES ###
 
+# NOTE: Leave the Param Manager unless you plan on replacing or
+# changing it.
+
 # Param Manager
 add_library(param_manager
   include/param_manager/param_manager.hpp
@@ -65,63 +71,65 @@ install(TARGETS param_manager
 
 ### START OF EXECUTABLES ###
 
+# NOTE: Modified and renamed the controller so that it doesn't use the unchanged files.
+
 # Controller
-add_executable(rosplane_controller
+add_executable(lqr_controller
   src/controller_base.cpp
-  src/controller_state_machine.cpp
-  src/controller_successive_loop.cpp
-  src/controller_total_energy.cpp)
+  src/controller_state_machine.cpp)
 ament_target_dependencies(rosplane_controller rosplane_msgs rosflight_msgs rclcpp rclpy Eigen3)
-target_link_libraries(rosplane_controller param_manager)
+target_link_libraries(lqr_controller param_manager)
 install(TARGETS
-  rosplane_controller
+  lqr_controller
   DESTINATION lib/${PROJECT_NAME})
 
-# Follower
-add_executable(rosplane_path_follower
-  src/path_follower_example.cpp
-  src/path_follower_base.cpp)
-ament_target_dependencies(rosplane_path_follower rosplane_msgs rclcpp rclpy Eigen3)
-target_link_libraries(rosplane_path_follower param_manager)
-install(TARGETS
-  rosplane_path_follower
-  DESTINATION lib/${PROJECT_NAME})
+# NOTE: Delete or comment these out so that you don't accidentally use a node you don't mean to.
 
-# Manager
-add_executable(rosplane_path_manager
-  src/path_manager_base.cpp
-  src/path_manager_example.cpp)
-ament_target_dependencies(rosplane_path_manager rosplane_msgs rclcpp rclpy Eigen3)
-target_link_libraries(rosplane_path_manager param_manager)
-install(TARGETS
-  rosplane_path_manager
-  DESTINATION lib/${PROJECT_NAME})
-
-# Planner
-add_executable(rosplane_path_planner
-  src/path_planner.cpp)
-target_link_libraries(rosplane_path_planner
-  param_manager
-  ${YAML_CPP_LIBRARIES}
-)
-ament_target_dependencies(rosplane_path_planner rosplane_msgs rosflight_msgs std_srvs rclcpp rclpy Eigen3)
-install(TARGETS
-  rosplane_path_planner
-  DESTINATION lib/${PROJECT_NAME})
-
-# Estimator
-add_executable(rosplane_estimator_node
-              src/estimator_ros.cpp
-              src/estimator_ekf.cpp
-              src/estimator_continuous_discrete.cpp)
-target_link_libraries(rosplane_estimator_node
-  ${YAML_CPP_LIBRARIES}
-)
-ament_target_dependencies(rosplane_estimator_node rosplane_msgs rosflight_msgs rclcpp Eigen3)
-target_link_libraries(rosplane_estimator_node param_manager)
-install(TARGETS
-  rosplane_estimator_node
-  DESTINATION lib/${PROJECT_NAME})
+# # Follower
+# add_executable(rosplane_path_follower
+#   src/path_follower_example.cpp
+#   src/path_follower_base.cpp)
+# ament_target_dependencies(rosplane_path_follower rosplane_msgs rclcpp rclpy Eigen3)
+# target_link_libraries(rosplane_path_follower param_manager)
+# install(TARGETS
+#   rosplane_path_follower
+#   DESTINATION lib/${PROJECT_NAME})
+#
+# # Manager
+# add_executable(rosplane_path_manager
+#   src/path_manager_base.cpp
+#   src/path_manager_example.cpp)
+# ament_target_dependencies(rosplane_path_manager rosplane_msgs rclcpp rclpy Eigen3)
+# target_link_libraries(rosplane_path_manager param_manager)
+# install(TARGETS
+#   rosplane_path_manager
+#   DESTINATION lib/${PROJECT_NAME})
+#
+# # Planner
+# add_executable(rosplane_path_planner
+#   src/path_planner.cpp)
+# target_link_libraries(rosplane_path_planner
+#   param_manager
+#   ${YAML_CPP_LIBRARIES}
+# )
+# ament_target_dependencies(rosplane_path_planner rosplane_msgs rosflight_msgs std_srvs rclcpp rclpy Eigen3)
+# install(TARGETS
+#   rosplane_path_planner
+#   DESTINATION lib/${PROJECT_NAME})
+#
+# # Estimator
+# add_executable(rosplane_estimator_node
+#               src/estimator_ros.cpp
+#               src/estimator_ekf.cpp
+#               src/estimator_continuous_discrete.cpp)
+# target_link_libraries(rosplane_estimator_node
+#   ${YAML_CPP_LIBRARIES}
+# )
+# ament_target_dependencies(rosplane_estimator_node rosplane_msgs rosflight_msgs rclcpp Eigen3)
+# target_link_libraries(rosplane_estimator_node param_manager)
+# install(TARGETS
+#   rosplane_estimator_node
+#   DESTINATION lib/${PROJECT_NAME})
 
 #### END OF EXECUTABLES ###
 
