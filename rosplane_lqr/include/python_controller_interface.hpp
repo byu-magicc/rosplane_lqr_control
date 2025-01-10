@@ -100,6 +100,10 @@ protected:
    */
   virtual void take_off_longitudinal_control(const Input & input, Output & output);
 
+  void lqr_lateral_control(const Input & input, Output & output);
+
+  void lqr_longitudinal_control(const Input & input, Output & output);
+
   float sat(float value, float up_limit, float low_limit);
 
   float adjust_h_c(float h_c, float h, float max_diff);

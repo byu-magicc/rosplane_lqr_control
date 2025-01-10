@@ -40,7 +40,7 @@ void PythonControllerInterface::climb(const Input & input, Output & output)
 
 void PythonControllerInterface::climb_exit()
 {
-
+  // Put any code that should run as the airplane exits take off mode.
 }
 
 void PythonControllerInterface::altitude_hold(const Input & input, Output & output)
@@ -81,6 +81,16 @@ void PythonControllerInterface::take_off_lateral_control(const Input & input, Ou
 }
 
 void PythonControllerInterface::take_off_longitudinal_control(const Input & input, Output & output)
+{
+
+}
+  
+void PythonControllerInterface::lqr_lateral_control(const Input & input, Output & output)
+{
+
+}
+
+void PythonControllerInterface::lqr_longitudinal_control(const Input & input, Output & output)
 {
 
 }
