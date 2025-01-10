@@ -10,6 +10,10 @@ This fork of the ROSplane repository, is an example of how to appropriately fork
 - For additional clarity archive or remove the unchanged/unused files within the modified ROSplane package. This will help when bugs inevitably arise. You can know if the issue originates in the original repository or is due to your changes.
 - Update the rclcpp entry point at the bottom of the `controller_base.hpp`. This tells ROS to run your node.
 
+## Steps to Build
+
+To build this, you must have a built and sourced version of the original repository. You can then build this workspace as normal.
+
 [![ROS2 CI](https://github.com/rosflight/rosplane/actions/workflows/ros2-ci.yml/badge.svg)](https://github.com/rosflight/rosplane/actions/workflows/ros2-ci.yml)
 
 ROSplane is a basic fixed-wing autopilot build around ROS2 for use with the ROSflight autopilot. It is a continuation of the original [ROSplane](https://github.com/byu-magicc/rosplane) project. It is built according to the methods published in Small Unmanned Aircraft: Theory and Practice by Dr. Randy Beard and Dr. Tim McLain.
