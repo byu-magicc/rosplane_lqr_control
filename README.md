@@ -8,6 +8,7 @@ This fork of the ROSplane repository, is an example of how to appropriately fork
   - For example, in this repository, the `rosplane_extra`, `rosplane_gcs`, `rosplane_msgs`, `rosplane_sim` and `rosplane_tuning` ROS packages (folders) have been moved to the `.unchanged` directory.
 - Rename the modified package for clarity and to avoid aforementioned build issues. This is done in the `CMakeLists.txt` and in the `packages.xml`.
 - For additional clarity archive or remove the unchanged/unused files within the modified ROSplane package. This will help when bugs inevitably arise. You can know if the issue originates in the original repository or is due to your changes.
+- Update the rclcpp entry point at the bottom of the `controller_base.hpp`. This tells ROS to run your node.
 
 [![ROS2 CI](https://github.com/rosflight/rosplane/actions/workflows/ros2-ci.yml/badge.svg)](https://github.com/rosflight/rosplane/actions/workflows/ros2-ci.yml)
 

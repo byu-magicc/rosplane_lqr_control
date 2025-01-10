@@ -1,9 +1,6 @@
 #include <functional>
 
-#include <rclcpp/logging.hpp>
-
-#include "controller_successive_loop.hpp"
-#include "controller_total_energy.hpp"
+#include "python_controller_interface.hpp"
 
 #include "controller_base.hpp"
 
@@ -204,19 +201,9 @@ int main(int argc, char * argv[])
   // Initialize ROS2 and then begin to spin control node.
   rclcpp::init(argc, argv);
 
-  if (strcmp(argv[1], "total_energy") == 0) {
-    auto node = std::make_shared<rosplane::ControllerTotalEnergy>();
-    RCLCPP_INFO_STREAM(node->get_logger(), "Using total energy control.");
-    rclcpp::spin(node);
-  } else if (strcmp(argv[1], "default") == 0) {
-    auto node = std::make_shared<rosplane::ControllerSucessiveLoop>();
-    RCLCPP_INFO_STREAM(node->get_logger(), "Using default control.");
-    rclcpp::spin(node);
-  } else {
-    auto node = std::make_shared<rosplane::ControllerSucessiveLoop>();
-    RCLCPP_INFO_STREAM(node->get_logger(), "Invalid control type, using default control.");
-    rclcpp::spin(node);
-  }
+  auto node = std::make_shared<rosplane::PythonControllerInterface>();
+  RCLCPP_INFO_STREAM(node->get_logger(), "Invalid control type, using default control.");
+  rclcpp::spin(node);
 
   return 0;
 }

@@ -1,18 +1,18 @@
 #ifndef CONTROLLER_PYTHON_H
 #define CONTROLLER_PYTHON_H
 
-#include "python_controller_interface.hpp"
+#include "controller_state_machine.hpp"
 
 namespace rosplane
 {
 
-class ControllerSucessiveLoop : public ControllerStateMachine
+class PythonControllerInterface : public ControllerStateMachine
 {
 public:
   /**
    * Constructor to initialize node.
    */
-  ControllerSucessiveLoop();
+  PythonControllerInterface();
 
 protected:
   /**
@@ -99,127 +99,6 @@ protected:
    * @param output The control efforts calculated and selected intermediate values.
    */
   virtual void take_off_longitudinal_control(const Input & input, Output & output);
-
-  /**
-   * The control loop for moving to and holding a commanded course.
-   * @param chi_c The commanded course angle.
-   * @param chi The current course angle.
-   * @param phi_ff The roll angle feedforward term. This allows for faster convergence.   // TODO add reference to book?
-   * @param r The yaw rate taken from the gyro.
-   * @return The commanded roll angle, to achieve the course angle.
-   */
-  float course_hold(float chi_c, float chi, float phi_ff, float r);
-
-  /**
-   * The difference between the commanded course angle and the current course angle.
-   */
-  float c_error_;
-
-  /**
-   * The integral of the error in course angle.
-   */
-  float c_integrator_;
-
-  /**
-   * The control loop for moving to and holding a commanded roll angle.
-   * @param phi_c The commanded roll angle.
-   * @param phi The current roll angle.
-   * @param p The roll rate taken from the gyro.
-   * @return The aileron deflection in radians required to achieve the commanded roll angle.
-   */
-  float roll_hold(float phi_c, float phi, float p);
-
-  /**
-   * The difference between the commanded roll angle and the current roll angle.
-   */
-  float r_error_;
-
-  /**
-   * The integral of the error in roll angle.
-   */
-  float r_integrator;
-
-  /**
-   * The control loop for moving to and holding a commanded pitch angle.
-   * @param theta_c The commanded pitch angle.
-   * @param theta The current pitch angle.
-   * @param q The pitch rate taken from the gyro.
-   * @return The elevator deflection in radians required to achieve the commanded pitch.
-   */
-  float pitch_hold(float theta_c, float theta, float q);
-
-  /**
-   * The difference between the commanded pitch angle and the current pitch angle.
-   */
-  float p_error_;
-
-  /**
-   * The integral of the error in pitch angle.
-   */
-  float p_integrator_;
-
-  /**
-   * The control loop that calculates the required throttle level to move to and maintain a commanded airspeed.
-   * @param va_c The commanded airspeed.
-   * @param va The current airspeed.
-   * @return The required throttle between 0 (no throttle) and 1 (full throttle).
-   */
-  float airspeed_with_throttle_hold(float va_c, float va);
-
-  /**
-   * The difference between the commanded airspeed and the current airspeed.
-   */
-  float at_error_;
-
-  /**
-   * The integral of the error in airspeed.
-   */
-  float at_integrator_;
-
-  /**
-   * The derivative of the error in airspeed.
-   */
-  float at_differentiator_;
-
-  /**
-   * The control loop that calculates the required pitch angle to command to maintain a commanded altitude.
-   * @param h_c The commanded altitude.
-   * @param h The current altitude.
-   * @return The commanded pitch angle to maintain and achieve the commanded altitude.
-   */
-  float altitude_hold_control(float h_c, float h);
-
-  /**
-   * The difference between the commanded altitude and the current altitude.
-   */
-  float a_error_;
-
-  /**
-   * The integral of the error in altitude.
-   */
-  float a_integrator_;
-
-  /**
-   * The derivative of the error in altitude.
-   */
-  float a_differentiator_;
-
-  //    float cooridinated_turn_hold(float v, const struct params_s &params, float Ts); // TODO implement if you want...
-  //    float ct_error_;
-  //    float ct_integrator_;
-  //    float ct_differentiator_;
-  float yaw_damper(float r);
-
-  float delta_r_delay_;
-  float r_delay_;
-
-  /**
- * Saturate a given value to a maximum or minimum of the limits.
- * @param value The value to saturate.
- * @param up_limit The maximum the value can take on.
- * @param low_limit The minimum the value can take on.
- * @return The saturated value.
- */
 
   float sat(float value, float up_limit, float low_limit);
 
