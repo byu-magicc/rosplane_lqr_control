@@ -76,8 +76,9 @@ install(TARGETS param_manager
 # Controller
 add_executable(lqr_controller
   src/controller_base.cpp
-  src/controller_state_machine.cpp)
-ament_target_dependencies(rosplane_controller rosplane_msgs rosflight_msgs rclcpp rclpy Eigen3)
+  src/controller_state_machine.cpp
+  src/python_controller_interface.cpp)
+ament_target_dependencies(lqr_controller rosplane_msgs rosflight_msgs rclcpp rclpy Eigen3)
 target_link_libraries(lqr_controller param_manager)
 install(TARGETS
   lqr_controller
