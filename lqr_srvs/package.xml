@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>rosplane_msgs</name>
+  <name>lqr_msgs</name>
   <version>1.0.0</version>
   <description>Message definitions for the rosplane package</description>
   <maintainer email="cartern2@byu.edu">Carter Noh</maintainer>

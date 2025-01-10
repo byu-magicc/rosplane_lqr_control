@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(rosplane_msgs)
+project(lqr_msgs)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -24,23 +24,14 @@ find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
-set(msg_files
-  "msg/ControllerCommands.msg"
-  "msg/ControllerInternals.msg"
-  "msg/CurrentPath.msg"
-  "msg/State.msg"
-  "msg/Waypoint.msg"
-)
-
 set(srv_files
   "srv/AddWaypoint.srv"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  ${msg_files}
   ${srv_files}
   DEPENDENCIES 
-  std_msgs # Add packages that above messages depend on
+  std_msgs
   sensor_msgs
 )
 
