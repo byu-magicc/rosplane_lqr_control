@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(lqr_msgs)
+project(lqr_srvs)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -21,18 +21,20 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
+find_package(rosplane_msgs REQUIRED)
+find_package(rosflight_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 set(srv_files
-  "srv/AddWaypoint.srv"
+  "srv/LqrControl.srv"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${srv_files}
   DEPENDENCIES 
   std_msgs
-  sensor_msgs
+  rosplane_msgs
+  rosflight_msgs
 )
 
 if(BUILD_TESTING)
