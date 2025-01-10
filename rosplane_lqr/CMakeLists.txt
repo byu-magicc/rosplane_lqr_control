@@ -27,6 +27,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(lqr_srvs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
@@ -78,7 +79,7 @@ add_executable(lqr_controller
   src/controller_base.cpp
   src/controller_state_machine.cpp
   src/python_controller_interface.cpp)
-ament_target_dependencies(lqr_controller rosplane_msgs rosflight_msgs rclcpp rclpy Eigen3)
+ament_target_dependencies(lqr_controller rosplane_msgs rosflight_msgs lqr_srvs rclcpp rclpy Eigen3)
 target_link_libraries(lqr_controller param_manager)
 install(TARGETS
   lqr_controller

@@ -2,6 +2,7 @@
 #define CONTROLLER_PYTHON_H
 
 #include "controller_state_machine.hpp"
+#include <lqr_srvs/srv/lqr_control.hpp>
 
 namespace rosplane
 {
@@ -58,51 +59,7 @@ protected:
    */
   virtual void altitude_hold_exit();
 
-  /**
-   * This function runs the lateral control loops for the altitude hold zone.
-   * @param input The command inputs to the controller such as course and airspeed.
-   * @param output The control efforts calculated and selected intermediate values.
-   */
-  virtual void alt_hold_lateral_control(const Input & input, Output & output);
-
-  /**
-   * This function runs the longitudinal control loops for the altitude hold zone.
-   * @param input The command inputs to the controller such as course and airspeed.
-   * @param output The control efforts calculated and selected intermediate values.
-   */
-  virtual void alt_hold_longitudinal_control(const Input & input, Output & output);
-
-  /**
-   * This function runs the lateral control loops for the climb zone.
-   * @param input The command inputs to the controller such as course and airspeed.
-   * @param output The control efforts calculated and selected intermediate values.
-   */
-  virtual void climb_lateral_control(const Input & input, Output & output);
-
-  /**
-   * This function runs the longitudinal control loops for the climb zone.
-   * @param input The command inputs to the controller such as course and airspeed.
-   * @param output The control efforts calculated and selected intermediate values.
-   */
-  virtual void climb_longitudinal_control(const Input & input, Output & output);
-
-  /**
-   * This function runs the lateral control loops for the take-off zone.
-   * @param input The command inputs to the controller such as course and airspeed.
-   * @param output The control efforts calculated and selected intermediate values.
-   */
-  virtual void take_off_lateral_control(const Input & input, Output & output);
-
-  /**
-   * This function runs the longitudinal control loops for the take-off zone.
-   * @param input The command inputs to the controller such as course and airspeed.
-   * @param output The control efforts calculated and selected intermediate values.
-   */
-  virtual void take_off_longitudinal_control(const Input & input, Output & output);
-
-  void lqr_lateral_control(const Input & input, Output & output);
-
-  void lqr_longitudinal_control(const Input & input, Output & output);
+  void lqr_control(const Input & input, Output & output);
 
   float sat(float value, float up_limit, float low_limit);
 
@@ -114,6 +71,12 @@ private:
    * Also declares default values before they are set to the values set in the launch script.
   */
   void declare_parameters();
+
+  /**
+  * The client for the lqr_controller.
+  */
+  rclcpp::Client<lqr_srvs::srv::LqrControl>::SharedPtr lqr_controller_client;
+  
 };
 } // namespace rosplane
 

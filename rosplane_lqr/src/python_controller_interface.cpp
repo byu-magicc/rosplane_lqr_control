@@ -13,6 +13,8 @@ double wrap_within_180(double fixed_heading, double wrapped_heading)
 
 PythonControllerInterface::PythonControllerInterface()
 {
+
+  lqr_controller_client = this->create_client<lqr_srvs::srv::LqrControl>("lqr_controller_update");
   // Declare parameters associated with this controller, controller_state_machine
   declare_parameters();
   // Set parameters according to the parameters in the launch file, otherwise use the default values
@@ -22,8 +24,6 @@ PythonControllerInterface::PythonControllerInterface()
 void PythonControllerInterface::take_off(const Input & input, Output & output)
 {
   // Run lateral and longitudinal controls.
-  take_off_lateral_control(input, output);
-  take_off_longitudinal_control(input, output);
 }
 
 void PythonControllerInterface::take_off_exit()
@@ -34,8 +34,6 @@ void PythonControllerInterface::take_off_exit()
 void PythonControllerInterface::climb(const Input & input, Output & output)
 {
   // Run lateral and longitudinal controls.
-  climb_lateral_control(input, output);
-  climb_longitudinal_control(input, output);
 }
 
 void PythonControllerInterface::climb_exit()
@@ -46,8 +44,6 @@ void PythonControllerInterface::climb_exit()
 void PythonControllerInterface::altitude_hold(const Input & input, Output & output)
 {
   // Run lateral and longitudinal controls.
-  alt_hold_lateral_control(input, output);
-  alt_hold_longitudinal_control(input, output);
 }
 
 void PythonControllerInterface::altitude_hold_exit()
@@ -55,42 +51,8 @@ void PythonControllerInterface::altitude_hold_exit()
 
 }
 
-void PythonControllerInterface::alt_hold_lateral_control(const Input & input, Output & output)
-{
-
-}
-
-void PythonControllerInterface::alt_hold_longitudinal_control(const Input & input, Output & output)
-{
   
-}
-
-void PythonControllerInterface::climb_lateral_control(const Input & input, Output & output)
-{
-
-}
-
-void PythonControllerInterface::climb_longitudinal_control(const Input & input, Output & output)
-{
-
-}
-
-void PythonControllerInterface::take_off_lateral_control(const Input & input, Output & output)
-{
-
-}
-
-void PythonControllerInterface::take_off_longitudinal_control(const Input & input, Output & output)
-{
-
-}
-  
-void PythonControllerInterface::lqr_lateral_control(const Input & input, Output & output)
-{
-
-}
-
-void PythonControllerInterface::lqr_longitudinal_control(const Input & input, Output & output)
+void PythonControllerInterface::lqr_control(const Input & input, Output & output)
 {
 
 }
